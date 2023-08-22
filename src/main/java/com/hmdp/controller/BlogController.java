@@ -22,6 +22,11 @@ public class BlogController {
     private IBlogService blogService;
 
 
+    /**
+     * 保存探店博客
+     * @param blog
+     * @return
+     */
     @PostMapping
     public Result saveBlog(@RequestBody Blog blog) {
         // 获取登录用户
@@ -33,12 +38,22 @@ public class BlogController {
         return Result.ok(blog.getId());
     }
 
+    /**
+     * 修改点赞数量
+     * @param id
+     * @return
+     */
     @PutMapping("/like/{id}")
     public Result likeBlog(@PathVariable("id") Long id) {
         // 修改点赞数量
         return blogService.likeBlog(id);
     }
 
+    /**
+     * 查询当前用户发布的博客
+     * @param current
+     * @return
+     */
     @GetMapping("/of/me")
     public Result queryMyBlog(@RequestParam(value = "current", defaultValue = "1") Integer current) {
         // 获取登录用户
@@ -51,16 +66,31 @@ public class BlogController {
         return Result.ok(records);
     }
 
+    /**
+     * 查询当前用户是否已点赞
+     * @param current
+     * @return
+     */
     @GetMapping("/hot")
     public Result queryHotBlog(@RequestParam(value = "current", defaultValue = "1") Integer current) {
         return blogService.queryHotBlog(current);
     }
 
+    /**
+     * 根据id查询博客
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public Result queryBlogById(@PathVariable("id") Long id){
         return blogService.queryBlogById(id);
     }
 
+    /**
+     * 查询点赞前5名
+     * @param id
+     * @return
+     */
     @GetMapping("/likes/{id}")
     public Result getUserTop5(@PathVariable("id") Long id){
         return blogService.getUserTop5(id);
